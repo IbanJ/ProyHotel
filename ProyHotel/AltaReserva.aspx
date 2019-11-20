@@ -22,7 +22,7 @@
         <asp:SqlDataSource ID="SqlHabitacion" runat="server" ConnectionString="<%$ ConnectionStrings:AVAN_ibanConnectionString %>" SelectCommand="SELECT [Categoria], [descripcion] FROM hotel.[tipoHabitacion]"></asp:SqlDataSource>
         <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
         <asp:Label ID="lblHabitaciones" runat="server" Visible="False"></asp:Label>
-        <asp:Button ID="Button1" runat="server" Text="Button" />
+        <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
     </form>
 </body>
 </html>

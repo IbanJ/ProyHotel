@@ -12,23 +12,24 @@ namespace ProyHotel
     public partial class altaReserva : System.Web.UI.Page
     {
         SqlConnection conn = new SqlConnection("Data Source = SEGUNDO150; Initial Catalog = AVAN_iban; Integrated Security = True");
-        SqlCommand insertFecha = new SqlCommand();
+        SqlCommand selectHabDisp = new SqlCommand();
+        SqlCommand insertReserva = new SqlCommand();
         SqlParameter prmSalida = new SqlParameter();
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            insertFecha.CommandType = CommandType.StoredProcedure;
-            insertFecha.CommandText = "HOTEL.numHabitaciones";
-            insertFecha.Connection = conn;
+            selectHabDisp.CommandType = CommandType.StoredProcedure;
+            selectHabDisp.CommandText = "HOTEL.numHabitaciones";
+            selectHabDisp.Connection = conn;
 
-            insertFecha.Parameters.AddWithValue("@p_fechaEntrada", Session["fechaEntrada"]);
-            insertFecha.Parameters.AddWithValue("@p_fechaSalida", Session["fechaSalida"]);
-            insertFecha.Parameters.AddWithValue("@p_tipoHabitacion",DropDownList1.SelectedValue);
+            selectHabDisp.Parameters.AddWithValue("@p_fechaEntrada", Session["fechaEntrada"]);
+            selectHabDisp.Parameters.AddWithValue("@p_fechaSalida", Session["fechaSalida"]);
+            selectHabDisp.Parameters.AddWithValue("@p_tipoHabitacion",DropDownList1.SelectedValue);
 
             prmSalida.ParameterName = "@p_salida";
             prmSalida.SqlDbType = SqlDbType.Int;
             prmSalida.Direction = ParameterDirection.Output;
-            insertFecha.Parameters.Add(prmSalida);
+            selectHabDisp.Parameters.Add(prmSalida);
 
         }
 
@@ -47,12 +48,17 @@ namespace ProyHotel
         {
             
             conn.Open();
-            insertFecha.ExecuteNonQuery();
-           // int salida = insertFecha.Parameters["@p_salida"].;
+            selectHabDisp.ExecuteNonQuery();
+           // int salida = selectHabDisp.Parameters["@p_salida"].;
             conn.Close();
             lblHabitaciones.Visible = true;
-            lblHabitaciones.Text = "Habitaciones disp:" + prmSalida.Value.ToString();
+            lblHabitaciones.Text = "Habitaciones disp:" + int.Parse(prmSalida.Value.ToString());
  
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
